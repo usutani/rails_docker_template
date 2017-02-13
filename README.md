@@ -1,24 +1,20 @@
-# README
+# docker rails template
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## to initialize from base
 
-Things you may want to cover:
+```bash
+script/init
+```
 
-* Ruby version
+## to bootstrap after clone
 
-* System dependencies
+```bash
+script/bootstrap
+```
 
-* Configuration
+## to develop
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+docker-compose up -d
+docker-compose exec spring rails db:migrate
+```
