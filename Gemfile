@@ -45,7 +45,20 @@ group :development do
   gem 'annotate'
 end
 
+group :test do
+  gem 'shoulda-matchers'
+  gem 'json_expressions'
+  gem 'database_rewinder'
+  gem 'rspec-request_describer'
+  gem 'timecop'
+  gem 'autodoc'
+end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# models
 gem 'seed-fu'
+gem 'activerecord-import'
+gem 'rails-i18n'
+gem 'kaminari'
