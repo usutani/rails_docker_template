@@ -26,6 +26,19 @@ require 'rspec/rails'
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+require 'json_expressions/rspec'
+
+# URL: https://github.com/thoughtbot/shoulda-matchers/issues/486
+require 'shoulda-matchers'
+
+# URL: https://github.com/thoughtbot/shoulda-matchers/blob/master/NEWS.md
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -54,4 +67,30 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+
+  config.before :all do
+    FactoryGirl.reload
+  end
+
+  config.before :suite do
+    DatabaseRewinder.clean_all
+    SeedFu.seed
+  end
+
+  config.after :each do
+    DatabaseRewinder.clean
+    Timecop.return
+  end
+
+  Autodoc.configuration.path = 'doc/api'
+  Autodoc.configuration.toc = true
+
+  SeedFu.quiet = true
+
+  config.include FactoryGirl::Syntax::Methods
+  config.include RSpec::RequestDescriber, type: :request
+
+  # include urls
+  config.include Rails.application.routes.url_helpers
 end
