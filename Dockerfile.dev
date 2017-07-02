@@ -6,7 +6,8 @@ RUN apt-get update -qq && \
  apt-get install -y --no-install-recommends \
   build-essential \
   libpq-dev \
-  libfontconfig1 && \
+  libfontconfig1 \
+  vim && \
   rm -rf /var/lib/apt/lists/*
 
 ENV ENTRYKIT_VERSION 0.4.0
